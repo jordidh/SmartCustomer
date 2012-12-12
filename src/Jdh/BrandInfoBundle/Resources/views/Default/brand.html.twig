@@ -1,0 +1,33 @@
+Finding {{ brand }} info!
+<div id="toolbar" class="brand-toolbar" >
+    <p><a id="return_to_main" href="{{path("_brand_main")}}">Return to main page</a></p>
+</div>
+<br/>
+<form action="{{ path('_brand_info', {'startIndex': '1'}) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" id="form_submit"/>
+</form>
+<br/>
+{% if info %}
+    <br/>
+{% endif %}
+
+{{ result }}
+{% if info %}
+    <h1>Items</h1>
+    kind: {{ info['kind'] }},
+    Total items: {{ info['totalItems'] }},
+    Start index: {{ info['startIndex'] }},
+    Items per page: {{ info['itemsPerPage'] }},
+    Current item count: {{ info['currentItemCount'] }}
+    <ul>
+        {% for item in info['items'] %}
+            <li>
+                {{ item['product']['title'] }}: {{ item['product']['description'] }}<br/>
+                Price {{ item['product']['inventories'][0]['price'] }} {{ item['product']['inventories'][0]['currency'] }}<br/>
+                Creation date {{ item['product']['creationTime'] }}, modification {{ item['product']['modificationTime'] }}<br/>
+                <a href="{{ item['product']['link'] }}"><img src="{{ item['product']['images'][0]['link'] }}" alt="Go to product page" height="42" width="42"></a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

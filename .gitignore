@@ -9,6 +9,9 @@ web/uploads/*
 web/bundles/*
 build/
 
+#PhpStorm directories
+.idea/*
+
 # Configuration files
 app/config/parameters.ini
 app/config/parameters.yml

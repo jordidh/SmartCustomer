@@ -18,7 +18,15 @@
         "sensio/generator-bundle": "2.1.*",
         "jms/security-extra-bundle": "1.2.*",
         "jms/di-extra-bundle": "1.1.*",
-        "kriswallsmith/assetic": "1.1.*@dev"
+        "kriswallsmith/assetic": "1.1.*@dev",
+        "behat/behat": "2.4.*@stable",
+        "behat/symfony2-extension": "*",
+        "behat/mink-extension":          "*",
+        "behat/mink-browserkit-driver":  "*",
+        "behat/mink-goutte-driver": "*",
+        "behat/mink-selenium2-driver": "*",
+        "fabpot/goutte": "*",
+        "sensio/buzz-bundle": "*"
     },
     "scripts": {
         "post-install-cmd": [
@@ -37,5 +45,9 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web"
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin/"
     }
 }
