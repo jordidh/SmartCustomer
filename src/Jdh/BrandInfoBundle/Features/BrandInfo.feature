@@ -9,7 +9,7 @@ Feature: Finding brand info
     And I fill in "form_brand_name" with "nike"
     And I press "form_submit"
     Then I should be on "/brand/1"
-    And I should see "Total items:"
+    And I should see "Results for"
 
   Scenario: Success returning to main page
     Given I am on "/smartc"

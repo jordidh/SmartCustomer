@@ -1,4 +1,6 @@
 SmartCustomer
 =============
 
-Web to show product information to customers in a smart device
+Web to show brand information to customers and where is the nearest shop to buy in a smart device
+
+Uses jQuery Mobile and Google Apis

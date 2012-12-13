@@ -1,72 +1,46 @@
-Finding {{ brand }} info!
-<div id="toolbar" class="brand-toolbar" >
-    <p><a id="return_to_main" href="{{path("_brand_main")}}">Return to main page</a></p>
-</div>
-<br/>
-<form action="{{ path('_brand_wheretobuy', {'startIndex': '1'}) }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <input type="submit" id="form_submit"/>
-</form>
-<br/>
-{% if info %}
-    <br/>
-{% endif %}
+{% extends 'JdhBrandInfoBundle::layout.html.twig' %}
 
-{{ result }}
-<div id="map_canvas" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-<div id="info" class="lightbox">Detecting your location...</div>
+{% block content_header %}
+    <h1>Nearest place to buy</h1>
+{% endblock %}
 
-
-<p>Perform a local search on the map below:</p>
-<div style="width: 500px;">
-    <div style="margin-bottom: 5px;">
-        <div>
-            <input type="text" id="queryInput" value="pizza" style="width: 250px;"/>
-            <input type="button" value="Find" onclick="doSearch()"/>
-        </div>
+{% block content_block %}
+    <div id="toolbar" class="brand-toolbar" >
+        <p><a id="return_to_main" href="{{path("_brand_main")}}">Return to main page</a></p>
     </div>
-    <div style="position: absolute; left: 540px;">
+    <p>Nearest places to your position:</p>
+    <div id="info"></div>
+    <div">
+        <div>
+            <div>
+                <form>
+                    <div data-role="fieldcontain">
+                        <label for="name">Product Input:</label>
+                        <input type="text" name="name" id="queryInput" value="pizza"  />
+                    </div>
+                    <input type="button" id="formSubmit" value="Find" onclick="doSearch()"/>
+                </form>
+            </div>
+        </div>
+        <h2><div id="searchResults"></div></h2>
+        <div id="map" style="height: 350px; border: 1px solid #979797;"></div>
         <div id="searchwell"></div>
     </div>
-    <div id="map" style="height: 350px; border: 1px solid #979797;"></div>
-</div>
+{% endblock %}
 
-
-{% if info %}
-    <h1>Items</h1>
-    kind: {{ info['kind'] }},
-    Total items: {{ info['totalItems'] }},
-    Start index: {{ info['startIndex'] }},
-    Items per page: {{ info['itemsPerPage'] }},
-    Current item count: {{ info['currentItemCount'] }}
-    <ul>
-        {% for item in info['items'] %}
-            <li>
-                {{ item['product']['title'] }}: {{ item['product']['description'] }}<br/>
-                Price {{ item['product']['inventories'][0]['price'] }} {{ item['product']['inventories'][0]['currency'] }}<br/>
-                Creation date {{ item['product']['creationTime'] }}, modification {{ item['product']['modificationTime'] }}<br/>
-                <a href="{{ item['product']['link'] }}"><img src="{{ item['product']['images'][0]['link'] }}" alt="Go to product page" height="42" width="42"></a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAc1_OROYfXKCV_1MEPBHP4iAyO5YeMoxM&libraries=places&sensor=false"></script>
-
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key={{ googleApisKey }}&libraries=places&sensor=false"></script>
     <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script src="http://www.google.com/uds/api?file=uds.js&amp;v=1.0&amp;key=ABQIAAAAjU0EJWnWPMv7oQ-jjS7dYxQ82LsCgTSsdpNEnBsExtoeJv4cdBSUkiLH6ntmAr_5O4EfjDwOa0oZBQ" type="text/javascript"></script>
-
 
     {% javascripts
     '@JdhBrandInfoBundle/Resources/public/js/*'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+
     <script type="text/javascript">
-        var map;
-
-
         var gLocalSearch;
         var gMap;
         var gInfoWindow;
@@ -98,7 +72,7 @@ Finding {{ brand }} info!
                 mapTypeId: google.maps.MapTypeId.TERRAIN,
                 disableDefaultUI: true
             }
-            map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+            //map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
             prepareGeolocation();
             doGeolocation();
         }
@@ -136,13 +110,13 @@ Finding {{ brand }} info!
             // Centre the map on the new location
             var coords = position.coords || position.coordinate || position;
             var latLng = new google.maps.LatLng(coords.latitude, coords.longitude);
-            map.setCenter(latLng);
-            map.setZoom(14);
-            var marker = new google.maps.Marker({
-                map: map,
-                position: latLng,
-                title: 'Why, there you are!'
-            });
+            //map.setCenter(latLng);
+            //map.setZoom(14);
+            //var marker = new google.maps.Marker({
+            //    map: map,
+            //    position: latLng,
+            //    title: 'Why, there you are!'
+            //});
             document.getElementById('info').innerHTML = 'Looking for <b>' +
                     coords.latitude + ', ' + coords.longitude + '</b>...';
 
@@ -216,6 +190,10 @@ Finding {{ brand }} info!
             for (var i = 0; i < gLocalSearch.results.length; i++) {
                 gCurrentResults.push(new LocalResult(gLocalSearch.results[i]));
             }
+
+            //Show results
+            var searchResults = document.getElementById("searchResults");
+            searchResults.innerHTML = gLocalSearch.results.length + " results found";
 
             var attribution = gLocalSearch.getAttribution();
             if (attribution) {

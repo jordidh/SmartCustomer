@@ -6,10 +6,10 @@ Feature: Finding where to buy a brand product
   Scenario: Success getting brand shops
     Given I am on "/smartc"
     When I follow "brandwheretobuy"
-    And I fill in "form_product_to_buy" with "nike"
-    And I press "form_submit"
-    Then I should be on "/wheretobuy/1"
-    And I should see "Total items:"
+    And I fill in "queryInput" with "nike"
+    And I press "formSubmit"
+    Then I should be on "/wheretobuy"
+    And I should see "results found"
 
   Scenario: Success returning to main page
     Given I am on "/smartc"

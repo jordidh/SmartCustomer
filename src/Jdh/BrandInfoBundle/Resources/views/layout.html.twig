@@ -8,24 +8,19 @@
         {# stylesheets 'bundles/jdhweather/css/*' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets #}
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
     </head>
     <body>
 
-        <div id="brand-wrapper">
-            <div id="brand-header" class="brand-site-title">
-                <h1>Brand info</h1>
-            </div>
-
-            {% for flashMessage in app.session.flashbag.get('notice') %}
-                <div class="flash-message">
-                    <em>Notice</em>: {{ flashMessage }}
-                </div>
-            {% endfor %}
-
-            <div id="brand-content">
+        <div id="brand-wrapper" data-role="page">
+            <div id="brand-header" class="brand-site-title" data-role="header">
                 {% block content_header %}
                 {% endblock %}
+            </div>
 
+            <div id="brand-content" data-role="content">
                 {% block content_block %}
                 {% endblock %}
             </div>

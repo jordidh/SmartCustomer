@@ -1,24 +1,16 @@
 {% extends 'JdhBrandInfoBundle::layout.html.twig' %}
 
 {% block content_header %}
-
-    <div id="main_title" class="title" >
-        <h2>Brand info main page</h2>
-    </div>
-
+    <h1>Brand info main page</h1>
 {% endblock %}
 
 {% block content_block %}
-
     <div id="brandinfo-main-selector">
-        <p class="">
-            Select what you want to do:
-        </p>
-
-        <ul id="brandinfo-main-selections">
-            <li><a id="brandinfo" href="{{ path("_brand_info", {'startIndex': '1'})}}">Get brand info</a></li>
-            <li><a id="brandwheretobuy" href="{{ path("_brand_wheretobuy", {'startIndex': '1'}) }}">Get where to buy</a></li>
+        <ul id="brandinfo-main-selections" data-role="listview" data-theme="c" data-dividertheme="d">
+            <li data-role="list-divider">Select what do you want to do:</li>
+            <li><a id="brandinfo" href="{{ path("_brand_info", {'startIndex': '1'})}}" data-ajax="false">Get brand info</a></li>
+            <li><a id="brandwheretobuy" href="{{ path("_brand_wheretobuy") }}" data-ajax="false">Get nearest place to buy</a></li>
+            <li><a id="brandwheretobuyonline" href="{{ path("_brand_wheretobuy_online", {'startIndex': '1'}) }}" data-ajax="false">Get where to buy online</a></li>
         </ul>
     </div>
-
 {% endblock %}
